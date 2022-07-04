@@ -5,8 +5,9 @@ import './new_post_screen.dart';
 class PostsScreen extends StatelessWidget {
   final List<Post> _posts;
   final Function _addPost;
+  final String _username;
 
-  PostsScreen(this._posts, this._addPost);
+  PostsScreen(this._posts, this._addPost, this._username);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,26 @@ class PostsScreen extends StatelessWidget {
       body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                      Text(
+                        '${_username}\'s posts',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ]
+                ),
+              ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => NewPostScreen(_addPost)));
