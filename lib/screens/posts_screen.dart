@@ -2,12 +2,36 @@ import 'package:flutter/material.dart';
 import '../models/post.dart';
 import './new_post_screen.dart';
 
-class PostsScreen extends StatelessWidget {
+class PostsScreen extends StatefulWidget{
   final List<Post> _posts;
   final Function _addPost;
   final String _username;
 
-  PostsScreen(this._posts, this._addPost, this._username);
+  PostsScreen(
+      this._posts,
+      this._addPost,
+      this._username
+  );
+
+  @override
+  State<PostsScreen> createState() => PostsScreenState(_posts, _addPost, _username);
+}
+
+class PostsScreenState extends State<PostsScreen> {
+  final List<Post> _posts;
+  final Function _addPost;
+  final String _username;
+
+  PostsScreenState(
+      this._posts,
+      this._addPost,
+      this._username
+  );
+
+  void _updatePostList(Post newPost){
+    // Because PostsScreen isn't present in HomeScreen's build method, tell it to render again
+    setState(() => _addPost(newPost));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +60,7 @@ class PostsScreen extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewPostScreen(_addPost)));
-                },
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewPostScreen(_updatePostList))),
                 style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(40)),
                 child: const Icon(Icons.add),
               ),

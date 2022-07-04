@@ -1,5 +1,5 @@
+import 'package:aegis_app/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
-import '../screens/posts_screen.dart';
 import '../models/post.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,15 +8,12 @@ class HomeScreen extends StatefulWidget {
   HomeScreen(this._username);
 
   @override
-  State<HomeScreen> createState() => MyAppState(_username);
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class MyAppState extends State<HomeScreen>
+class HomeScreenState extends State<HomeScreen>
 {
-  final String _username;
-  final _posts = <Post>[];
-
-  MyAppState(this._username);
+  var _posts = <Post>[];
 
   void _addPost(Post newPost){
     setState(() => _posts.add(newPost));
@@ -24,9 +21,35 @@ class MyAppState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Aegis',
-        home: PostsScreen(_posts, _addPost, _username)
+    return Scaffold(
+      body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: const Text(
+                    'Menu',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PostsScreen(_posts, _addPost, widget._username);
+                })),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(40),
+                    alignment: Alignment.centerLeft
+                ),
+                child: Text('Profile'),
+              )
+            ],
+          )
+      )
     );
   }
 }

@@ -6,7 +6,6 @@ class NewPostScreen extends StatelessWidget
   final Function _addPost;
   final TextEditingController _textFieldController = TextEditingController();
 
-
   NewPostScreen(this._addPost);
 
   @override
