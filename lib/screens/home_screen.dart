@@ -1,6 +1,8 @@
 import 'package:aegis_app/screens/posts_screen.dart';
+import 'package:aegis_app/screens/todo_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/post.dart';
+import '../models/todo_card.dart';
 
 class HomeScreen extends StatefulWidget {
   final String _username;
@@ -14,9 +16,14 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen>
 {
   var _posts = <Post>[];
+  var _todoCards = <TodoCard>[];
 
   void _addPost(Post newPost){
     setState(() => _posts.add(newPost));
+  }
+
+  void _addTodoCard(TodoCard newTodoCard){
+    setState(() => _todoCards.add(newTodoCard));
   }
 
   @override
@@ -46,6 +53,16 @@ class HomeScreenState extends State<HomeScreen>
                     alignment: Alignment.centerLeft
                 ),
                 child: Text('Profile'),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return TodoListScreen(_todoCards, _addTodoCard);
+                })),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(40),
+                    alignment: Alignment.centerLeft
+                ),
+                child: Text('To-do List'),
               )
             ],
           )
