@@ -1,3 +1,4 @@
+import 'package:aegis_app/screens/todo_edit_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/todo_card.dart';
 
@@ -47,7 +48,12 @@ class TodoListScreenState extends State<TodoListScreen>{
             ),
             ListView(
               shrinkWrap: true,
-              children: widget._todoCards.map((todoCard) => Text(todoCard.title)).toList(),
+              children: widget._todoCards.map((todoCard) {
+                return InkWell(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TodoEditScreen(todoCard))),
+                    child: Text(todoCard.title),
+                );
+              }).toList(),
             )
           ],
         ),
