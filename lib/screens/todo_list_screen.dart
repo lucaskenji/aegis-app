@@ -14,7 +14,17 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class TodoListScreenState extends State<TodoListScreen>{
+  final String defaultCardName = 'New card';
+
   void _updateTodoList(TodoCard newTodoCard){
+    // Add a number to the name to make it easier to distinguish new cards
+    int numberSuffix = 1;
+
+    while (widget._todoCards.any((todoCard) => todoCard.title == newTodoCard.title)){
+      newTodoCard.title = '${defaultCardName} (${numberSuffix})';
+      numberSuffix++;
+    }
+
     // Because TodoListScreen isn't present in HomeScreen's build method, tell it to render again
     setState(() => widget._addTodoCard(newTodoCard));
   }
@@ -54,7 +64,7 @@ class TodoListScreenState extends State<TodoListScreen>{
                 ]
             ),
             ElevatedButton(
-                onPressed: () => _updateTodoList(TodoCard('New to-do card')),
+                onPressed: () => _updateTodoList(TodoCard(defaultCardName)),
                 style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
                 child: Icon(Icons.add)
             ),
