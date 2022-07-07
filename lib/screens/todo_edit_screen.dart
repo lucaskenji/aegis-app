@@ -4,8 +4,9 @@ import '../models/task.dart';
 
 class TodoEditScreen extends StatefulWidget{
   final TodoCard _todoCard;
+  final Function _saveTodoCard;
 
-  TodoEditScreen(this._todoCard);
+  TodoEditScreen(this._todoCard, this._saveTodoCard);
 
   @override
   State<TodoEditScreen> createState() => TodoEditScreenState();
@@ -17,10 +18,7 @@ class TodoEditScreenState extends State<TodoEditScreen>{
   late List<Task> _tasks = [...widget._todoCard.tasks];
 
   void _addTask(Task newTask) {
-    setState(() {
-      _tasks.add(newTask);
-    });
-
+    setState(() => _tasks.add(newTask));
     _checklistController.clear();
   }
 
@@ -109,7 +107,10 @@ class TodoEditScreenState extends State<TodoEditScreen>{
                 child: Text('Delete'),
             ),
             ElevatedButton(
-              onPressed: null,
+              onPressed: () {
+                widget._saveTodoCard(widget._todoCard, _titleController.text, _tasks);
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
               child: Text('Save'),
             ),

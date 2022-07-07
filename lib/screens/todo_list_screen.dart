@@ -1,6 +1,7 @@
 import 'package:aegis_app/screens/todo_edit_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/todo_card.dart';
+import '../models/task.dart';
 
 class TodoListScreen extends StatefulWidget {
   final List<TodoCard> _todoCards;
@@ -17,7 +18,14 @@ class TodoListScreenState extends State<TodoListScreen>{
     // Because TodoListScreen isn't present in HomeScreen's build method, tell it to render again
     setState(() => widget._addTodoCard(newTodoCard));
   }
-  
+
+  void _saveTodoCard(TodoCard todoCard, String title, List<Task> tasks){
+    setState(() {
+      todoCard.title = title;
+      todoCard.tasks = tasks;
+    });
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -50,8 +58,10 @@ class TodoListScreenState extends State<TodoListScreen>{
               shrinkWrap: true,
               children: widget._todoCards.map((todoCard) {
                 return InkWell(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TodoEditScreen(todoCard))),
-                    child: Text(todoCard.title),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return TodoEditScreen(todoCard, _saveTodoCard);
+                    })),
+                  child: Text(todoCard.title),
                 );
               }).toList(),
             )
