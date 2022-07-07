@@ -5,8 +5,9 @@ import '../models/task.dart';
 class TodoEditScreen extends StatefulWidget{
   final TodoCard _todoCard;
   final Function _saveTodoCard;
+  final Function _deleteTodoCard;
 
-  TodoEditScreen(this._todoCard, this._saveTodoCard);
+  TodoEditScreen(this._todoCard, this._saveTodoCard, this._deleteTodoCard);
 
   @override
   State<TodoEditScreen> createState() => TodoEditScreenState();
@@ -102,17 +103,23 @@ class TodoEditScreenState extends State<TodoEditScreen>{
                 )
             ),
             ElevatedButton(
-                onPressed: null,
-                style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
+                onPressed: () {
+                  widget._deleteTodoCard(widget._todoCard);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(40),
+                    primary: Colors.red
+                ),
                 child: Text('Delete'),
             ),
             ElevatedButton(
-              onPressed: () {
-                widget._saveTodoCard(widget._todoCard, _titleController.text, _tasks);
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
-              child: Text('Save'),
+                onPressed: () {
+                  widget._saveTodoCard(widget._todoCard, _titleController.text, _tasks);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
+                child: Text('Save'),
             ),
           ],
         ),

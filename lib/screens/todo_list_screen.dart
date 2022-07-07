@@ -26,6 +26,10 @@ class TodoListScreenState extends State<TodoListScreen>{
     });
   }
 
+  void _deleteTodoCard(TodoCard todoCard){
+    setState(() => widget._todoCards.remove(todoCard));
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -59,7 +63,7 @@ class TodoListScreenState extends State<TodoListScreen>{
               children: widget._todoCards.map((todoCard) {
                 return InkWell(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return TodoEditScreen(todoCard, _saveTodoCard);
+                      return TodoEditScreen(todoCard, _saveTodoCard, _deleteTodoCard);
                     })),
                   child: Text(todoCard.title),
                 );
