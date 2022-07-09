@@ -2,7 +2,7 @@ import './task.dart';
 
 class TodoCard {
   String title;
-  List<Task> tasks = <Task>[];
+  List<Task> tasks;
 
-  TodoCard(this.title);
+  TodoCard(this.title, [this.tasks = const <Task>[]]);
 }
