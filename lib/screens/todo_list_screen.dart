@@ -75,7 +75,15 @@ class TodoListScreenState extends State<TodoListScreen>{
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return TodoEditScreen(todoCard, _saveTodoCard, _deleteTodoCard);
                     })),
-                  child: Text(todoCard.title),
+                    child: Container(
+                        color: Color(0xffd3d9e3),
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                            todoCard.title,
+                            style: TextStyle(fontSize: 20)
+                        ),
+                    ),
                 );
               }).toList(),
             )
