@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../models/habit.dart';
 import '../models/post.dart';
 import '../models/todo_card.dart';
+import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
   final String _username;
@@ -21,6 +22,7 @@ class HomeScreenState extends State<HomeScreen>
   var _posts = <Post>[];
   var _todoCards = <TodoCard>[];
   var _habits = <Habit>[];
+  late List<User> _users = _populateUsers();
 
   void _addPost(Post newPost){
     setState(() => _posts.add(newPost));
@@ -32,6 +34,17 @@ class HomeScreenState extends State<HomeScreen>
 
   void _addHabit(Habit newHabit){
     setState(() => _habits.add(newHabit));
+  }
+
+  List<User> _populateUsers(){
+    // Using this temporarily while memory is being used as a database.
+    return <User>[
+      User('Anna'),
+      User('Bob'),
+      User('Charlie'),
+      User('David'),
+      User('Emmanuel')
+    ];
   }
 
   @override
@@ -84,7 +97,7 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SearchScreen();
+                  return SearchScreen(_users);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),

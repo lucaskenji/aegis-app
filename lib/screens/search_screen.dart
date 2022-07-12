@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import '../models/user.dart';
 
 class SearchScreen extends StatefulWidget{
+  final List<User> _users;
+
+  SearchScreen(this._users);
+
   @override
   State<SearchScreen> createState() => SearchScreenState();
 }
 
 class SearchScreenState extends State<SearchScreen>{
   final TextEditingController _searchController = TextEditingController();
+  late List<User> _users = [...widget._users];
+
+  void _filterUsers(){
+    setState(() {
+      // Using toLowerCase to make a case insensitive search.
+      _users = [...widget._users].where((user) {
+        return user.username.toLowerCase().contains(_searchController.text.toLowerCase());
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -50,7 +65,7 @@ class SearchScreenState extends State<SearchScreen>{
                     Container(
                         margin: EdgeInsets.only(left: 10),
                         child: ElevatedButton(
-                          onPressed: null,
+                          onPressed: _filterUsers,
                           child: Text('Search'),
                           style: ElevatedButton.styleFrom(minimumSize: Size(24, 56)),
                         )
@@ -59,10 +74,23 @@ class SearchScreenState extends State<SearchScreen>{
                 )
             ),
             Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [],
-                ),
+              child: ListView(
+                shrinkWrap: true,
+                children: _users.map((user) {
+                  return InkWell(
+                    onTap: null,
+                    child: Container(
+                      color: Color(0xffd3d9e3),
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.only(bottom: 5),
+                      child: Text(
+                          user.username,
+                          style: TextStyle(fontSize: 20)
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
