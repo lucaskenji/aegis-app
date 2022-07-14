@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget
             ElevatedButton(
                 onPressed: () {
                     Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(User(_controller.text))));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(User(_controller.text, []))));
                 },
                 style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
                 child: Text('Let\'s go!')

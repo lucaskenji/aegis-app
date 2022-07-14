@@ -1,10 +1,12 @@
+import 'package:aegis_app/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
 
 class SearchScreen extends StatefulWidget{
   final List<User> _users;
+  final Function _addPost;
 
-  SearchScreen(this._users);
+  SearchScreen(this._users, this._addPost);
 
   @override
   State<SearchScreen> createState() => SearchScreenState();
@@ -78,7 +80,11 @@ class SearchScreenState extends State<SearchScreen>{
                 shrinkWrap: true,
                 children: _users.map((user) {
                   return InkWell(
-                    onTap: null,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return PostsScreen(user, false, widget._addPost);
+                      }));
+                    },
                     child: Container(
                       color: Color(0xffd3d9e3),
                       padding: EdgeInsets.all(10),

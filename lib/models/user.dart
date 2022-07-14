@@ -2,7 +2,7 @@ import './post.dart';
 
 class User {
   final String username;
-  List<Post> posts = [];
+  List<Post> posts;
 
-  User(this.username);
+  User(this.username, this.posts);
 }

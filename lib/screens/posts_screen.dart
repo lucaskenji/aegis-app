@@ -6,8 +6,9 @@ import './new_post_screen.dart';
 class PostsScreen extends StatefulWidget{
   final User _user;
   final Function _addPost;
+  final bool _isCurrentUser;
 
-  PostsScreen(this._user, this._addPost);
+  PostsScreen(this._user, this._isCurrentUser, this._addPost);
 
   @override
   State<PostsScreen> createState() => PostsScreenState();
@@ -17,6 +18,22 @@ class PostsScreenState extends State<PostsScreen> {
   void _updatePostList(Post newPost){
     // Because PostsScreen isn't present in HomeScreen's build method, tell it to render again
     setState(() => widget._addPost(newPost));
+  }
+
+  Widget _renderButton(){
+    if (widget._isCurrentUser) {
+      return ElevatedButton(
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewPostScreen(_updatePostList))),
+        style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(40)),
+        child: const Icon(Icons.add),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: null,
+        style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(40)),
+        child: const Text('Follow'),
+      );
+    }
   }
 
   @override
@@ -45,11 +62,7 @@ class PostsScreenState extends State<PostsScreen> {
                     ]
                 ),
               ),
-              ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewPostScreen(_updatePostList))),
-                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(40)),
-                child: const Icon(Icons.add),
-              ),
+              _renderButton(),
               ListView(
                 shrinkWrap: true,
                 children: widget._user.posts.map((post) {

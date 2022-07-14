@@ -38,11 +38,11 @@ class HomeScreenState extends State<HomeScreen>
   List<User> _populateUsers(){
     // Using this temporarily while memory is being used as a database.
     return <User>[
-      User('Anna'),
-      User('Bob'),
-      User('Charlie'),
-      User('David'),
-      User('Emmanuel')
+      User('Anna', <Post>[Post('Hello world!')]),
+      User('Bob', []),
+      User('Charlie', <Post>[Post('This is a test'), Post('This is another test.')]),
+      User('David', <Post>[Post('Bob and Emmanuel currently have no posts.')]),
+      User('Emmanuel', [])
     ];
   }
 
@@ -66,7 +66,7 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PostsScreen(widget._user, _addPost);
+                  return PostsScreen(widget._user, true, _addPost);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),
@@ -96,7 +96,7 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SearchScreen(_users);
+                  return SearchScreen(_users, _addPost);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),
