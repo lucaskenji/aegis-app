@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
 import '../models/post.dart';
+import '../models/user.dart';
 import './new_post_screen.dart';
 
 class PostsScreen extends StatefulWidget{
-  final List<Post> _posts;
+  final User _user;
   final Function _addPost;
-  final String _username;
 
-  PostsScreen(
-      this._posts,
-      this._addPost,
-      this._username
-  );
+  PostsScreen(this._user, this._addPost);
 
   @override
-  State<PostsScreen> createState() => PostsScreenState(_posts, _addPost, _username);
+  State<PostsScreen> createState() => PostsScreenState();
 }
 
 class PostsScreenState extends State<PostsScreen> {
-  final List<Post> _posts;
-  final Function _addPost;
-  final String _username;
-
-  PostsScreenState(
-      this._posts,
-      this._addPost,
-      this._username
-  );
-
   void _updatePostList(Post newPost){
     // Because PostsScreen isn't present in HomeScreen's build method, tell it to render again
-    setState(() => _addPost(newPost));
+    setState(() => widget._addPost(newPost));
   }
 
   @override
@@ -50,7 +36,7 @@ class PostsScreenState extends State<PostsScreen> {
                         icon: const Icon(Icons.arrow_back),
                       ),
                       Text(
-                        '${_username}\'s posts',
+                        '${widget._user.username}\'s posts',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold
@@ -66,7 +52,7 @@ class PostsScreenState extends State<PostsScreen> {
               ),
               ListView(
                 shrinkWrap: true,
-                children: _posts.map((post) {
+                children: widget._user.posts.map((post) {
                   return Container(
                     color: Color(0xffd3d9e3),
                     padding: EdgeInsets.all(10),

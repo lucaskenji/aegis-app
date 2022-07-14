@@ -1,5 +1,6 @@
 import 'package:aegis_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import '../models/user.dart';
 
 class WelcomeScreen extends StatelessWidget
 {
@@ -25,7 +26,7 @@ class WelcomeScreen extends StatelessWidget
             ElevatedButton(
                 onPressed: () {
                     Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(_controller.text)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(User(_controller.text))));
                 },
                 style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
                 child: Text('Let\'s go!')

@@ -9,9 +9,9 @@ import '../models/todo_card.dart';
 import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String _username;
+  final User _user;
 
-  HomeScreen(this._username);
+  HomeScreen(this._user);
 
   @override
   State<HomeScreen> createState() => HomeScreenState();
@@ -19,13 +19,12 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen>
 {
-  var _posts = <Post>[];
   var _todoCards = <TodoCard>[];
   var _habits = <Habit>[];
   late List<User> _users = _populateUsers();
 
   void _addPost(Post newPost){
-    setState(() => _posts.add(newPost));
+    setState(() => widget._user.posts.add(newPost));
   }
 
   void _addTodoCard(TodoCard newTodoCard){
@@ -67,7 +66,7 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PostsScreen(_posts, _addPost, widget._username);
+                  return PostsScreen(widget._user, _addPost);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),
