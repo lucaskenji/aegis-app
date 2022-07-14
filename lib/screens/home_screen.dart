@@ -1,3 +1,4 @@
+import 'package:aegis_app/screens/following_screen.dart';
 import 'package:aegis_app/screens/habits_screen.dart';
 import 'package:aegis_app/screens/posts_screen.dart';
 import 'package:aegis_app/screens/search_screen.dart';
@@ -21,6 +22,7 @@ class HomeScreenState extends State<HomeScreen>
 {
   var _todoCards = <TodoCard>[];
   var _habits = <Habit>[];
+  var _usersFollowing = <User>[];
   late List<User> _users = _populateUsers();
 
   void _addPost(Post newPost){
@@ -66,7 +68,7 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PostsScreen(widget._user, true, _addPost);
+                  return PostsScreen(widget._user, _usersFollowing, true, _addPost);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),
@@ -96,7 +98,17 @@ class HomeScreenState extends State<HomeScreen>
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SearchScreen(_users, _addPost);
+                  return FollowingScreen(_usersFollowing, _addPost);
+                })),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(40),
+                    alignment: Alignment.centerLeft
+                ),
+                child: Text('Following'),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SearchScreen(_users, _usersFollowing, _addPost);
                 })),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),

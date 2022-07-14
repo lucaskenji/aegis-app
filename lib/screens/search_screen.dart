@@ -4,9 +4,10 @@ import '../models/user.dart';
 
 class SearchScreen extends StatefulWidget{
   final List<User> _users;
+  final List<User> _usersFollowing;
   final Function _addPost;
 
-  SearchScreen(this._users, this._addPost);
+  SearchScreen(this._users, this._usersFollowing, this._addPost);
 
   @override
   State<SearchScreen> createState() => SearchScreenState();
@@ -82,7 +83,7 @@ class SearchScreenState extends State<SearchScreen>{
                   return InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return PostsScreen(user, false, widget._addPost);
+                        return PostsScreen(user, widget._usersFollowing, false, widget._addPost);
                       }));
                     },
                     child: Container(
